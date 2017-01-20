@@ -15,7 +15,7 @@
     <bean id="simpleProcessorRouter" class="com.yile.church.common.router.ProcessorRouter">
         <property name="processors">
             <map>
-                <entry key="财务" value-ref="financeProcessor" />
+                <entry key="记账" value-ref="financeProcessor" />
             </map>
         </property>
     </bean>

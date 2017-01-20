@@ -24,7 +24,7 @@ public class WXService {
     private static final Logger LOGGER = LoggerFactory.getLogger(WXService.class);
 
     @Autowired
-    private static VoiceEngine voiceEngine;
+    private VoiceEngine voiceEngine;
 
     /**
      * 处理微信发来的请求
@@ -67,12 +67,14 @@ public class WXService {
             textMessage.setContent(respContent);
             respMessage = MessageUtil.textMessageToXml(textMessage);
         } catch (Exception e) {
-            LOGGER.error("process message error.");
+
+            LOGGER.error("process message error.",e);
         }
         return respMessage;
     }
 
     private ProcessorContext processVoice(ProcessorContext context) {
+        LOGGER.info(voiceEngine.hashCode()+"");
         context = voiceEngine.getProcessor(context);
         if(context.getProcessor() == null){
             context.setMsg("不知所云...");
