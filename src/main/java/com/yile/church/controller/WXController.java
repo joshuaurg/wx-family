@@ -2,6 +2,9 @@ package com.yile.church.controller;
 
 import com.yile.church.service.WXService;
 import com.yile.church.util.SignUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +20,11 @@ import java.io.PrintWriter;
 @RestController
 @RequestMapping(value = "/wx")
 public class WXController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(WXController.class);
+
+    @Autowired
+    private WXService wxService;
 
     @RequestMapping(value = "check",method = RequestMethod.GET)
     public void check(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -45,8 +53,9 @@ public class WXController {
         response.setCharacterEncoding("UTF-8");
 
         // 调用核心业务类接收消息、处理消息
-        String respMessage = WXService.processRequest(request);
+        String respMessage = wxService.processRequest(request);
 
+        LOGGER.info("process end...");
         // 响应消息
         PrintWriter out = response.getWriter();
         out.print(respMessage);

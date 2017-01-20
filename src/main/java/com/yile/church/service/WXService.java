@@ -1,9 +1,14 @@
 package com.yile.church.service;
 
+import com.yile.church.common.engine.VoiceEngine;
+import com.yile.church.common.model.ProcessorContext;
+import com.yile.church.common.processor.AbstractProcessor;
 import com.yile.church.model.resp.TextMessage;
 import com.yile.church.util.MessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -13,9 +18,13 @@ import java.util.Map;
  * @author : hema
  * @date : 2017年01月19日 下午5:49
  */
+@Service
 public class WXService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WXService.class);
+
+    @Autowired
+    private static VoiceEngine voiceEngine;
 
     /**
      * 处理微信发来的请求
@@ -23,11 +32,11 @@ public class WXService {
      * @param request
      * @return
      */
-    public static String processRequest(HttpServletRequest request) {
+    public String processRequest(HttpServletRequest request) {
         String respMessage = null;
         try {
             // 默认返回的文本消息内容
-            String respContent = "请求处理异常，请稍候尝试！";
+            String respContent = "试试语音，更快捷！";
 
             // xml请求解析
             Map<String, String> requestMap = MessageUtil.parseXml(request);
@@ -49,20 +58,26 @@ public class WXService {
 
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
                 if(requestMap.containsKey("Recognition")){
-                    respContent = processVoice(requestMap.get("Recognition"));
+                    ProcessorContext context = new ProcessorContext();
+                    context.setResource(requestMap.get("Recognition"));
+                    context = processVoice(context);
+                    respContent = context.getMsg();
                 }
             }
             textMessage.setContent(respContent);
             respMessage = MessageUtil.textMessageToXml(textMessage);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("process message error.");
         }
         return respMessage;
     }
 
-    private static String processVoice(String recognition) {
-
-
-        return null;
+    private ProcessorContext processVoice(ProcessorContext context) {
+        context = voiceEngine.getProcessor(context);
+        if(context.getProcessor() == null){
+            context.setMsg("不知所云...");
+        }
+        voiceEngine.processStart(context);
+        return context;
     }
 }

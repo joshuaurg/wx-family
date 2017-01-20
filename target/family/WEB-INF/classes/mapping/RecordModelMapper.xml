@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yile.church.mapper.RecordModelMapper" >
+  <resultMap id="BaseResultMap" type="com.yile.church.model.RecordModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="typ" property="typ" jdbcType="VARCHAR" />
+    <result column="item" property="item" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, typ, item, date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yile.church.model.RecordModel" >
+    insert into record (id, typ, item, 
+      date)
+    values (#{id,jdbcType=INTEGER}, #{typ,jdbcType=VARCHAR}, #{item,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yile.church.model.RecordModel" >
+    insert into record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="typ != null" >
+        typ,
+      </if>
+      <if test="item != null" >
+        item,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="typ != null" >
+        #{typ,jdbcType=VARCHAR},
+      </if>
+      <if test="item != null" >
+        #{item,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yile.church.model.RecordModel" >
+    update record
+    <set >
+      <if test="typ != null" >
+        typ = #{typ,jdbcType=VARCHAR},
+      </if>
+      <if test="item != null" >
+        item = #{item,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yile.church.model.RecordModel" >
+    update record
+    set typ = #{typ,jdbcType=VARCHAR},
+      item = #{item,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
