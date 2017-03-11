@@ -1,0 +1,4 @@
+2017-03-11 19:21:37,164 INFO[com.yile.church.HanLp:46] - {"city_list":[{"cityId":379,"city_lable":[],"counname":"中国","id":489,"localCounname":"中国","localName":"郑州市","localPname":"河南省","name":"郑州市","pname":"河南省"}],"rc":{"c":0}}
+2017-03-11 19:24:28,060 INFO[com.yile.church.HanLp:48] - {"city_list":[{"cityId":379,"city_lable":[],"counname":"中国","id":489,"localCounname":"中国","localName":"郑州市","localPname":"河南省","name":"郑州市","pname":"河南省"}],"rc":{"c":0}}
+2017-03-11 19:25:08,718 INFO[com.yile.church.HanLp:49] - {"city_list":[{"cityId":379,"city_lable":[],"counname":"中国","id":489,"localCounname":"中国","localName":"郑州市","localPname":"河南省","name":"郑州市","pname":"河南省"}],"rc":{"c":0}}
+2017-03-11 20:08:08,695 INFO[com.yile.church.HanLp:57] - zhongguo
