@@ -43,6 +43,7 @@ public class WXService {
 
             // 发送方帐号（open_id）
             String fromUserName = requestMap.get("FromUserName");
+            LOGGER.info(">>>>>fromUserName= " + fromUserName);
             // 公众帐号
             String toUserName = requestMap.get("ToUserName");
             // 消息类型
@@ -58,7 +59,9 @@ public class WXService {
 
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
                 if(requestMap.containsKey("Recognition")){
+                    LOGGER.info("recognition="+requestMap.get("Recognition"));
                     ProcessorContext context = new ProcessorContext();
+                    context.setOpenid(fromUserName);
                     context.setResource(requestMap.get("Recognition"));
                     context = processVoice(context);
                     respContent = context.getMsg();
@@ -67,13 +70,12 @@ public class WXService {
             textMessage.setContent(respContent);
             respMessage = MessageUtil.textMessageToXml(textMessage);
         } catch (Exception e) {
-
             LOGGER.error("process message error.",e);
         }
         return respMessage;
     }
 
-    private ProcessorContext processVoice(ProcessorContext context) {
+    private ProcessorContext processVoice(ProcessorContext context) throws Exception {
         LOGGER.info(voiceEngine.hashCode()+"");
         context = voiceEngine.getProcessor(context);
         if(context.getProcessor() == null){

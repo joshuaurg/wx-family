@@ -22,7 +22,7 @@ public class ProcessorRouter  {
 
     public AbstractProcessor route(String info) {
         for(Map.Entry<String,AbstractProcessor> entry : processors.entrySet()){
-            if(info.contains(entry.getKey())){
+            if(info.startsWith(entry.getKey())){
                 return entry.getValue();
             }
         }

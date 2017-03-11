@@ -79,4 +79,10 @@ public class FinanceModel implements Serializable {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+
+
+    @Override
+    public String toString() {
+        return "type:"+getType() + " money:"+getMoney() + " item:"+getItem();
+    }
 }

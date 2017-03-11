@@ -29,7 +29,7 @@ public class VoiceEngine {
         return context;
     }
 
-    public void processStart(ProcessorContext context) {
+    public void processStart(ProcessorContext context) throws Exception {
         LOGGER.info("start process...");
         AbstractProcessor processor = context.getProcessor();
         processor.process(context);

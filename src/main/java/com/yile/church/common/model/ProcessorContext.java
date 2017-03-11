@@ -7,6 +7,7 @@ import com.yile.church.common.processor.AbstractProcessor;
  */
 public class ProcessorContext {
 
+    private String openid;
     private String resource;
     private AbstractProcessor processor;
     private String code;
@@ -42,5 +43,13 @@ public class ProcessorContext {
 
     public void setProcessor(AbstractProcessor processor) {
         this.processor = processor;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 }
